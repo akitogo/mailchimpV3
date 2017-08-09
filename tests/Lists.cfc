@@ -7,7 +7,7 @@ component extends="testbox.system.BaseSpec"
 	*/
 	function beforeAll(){
 		lists=application.wirebox.getInstance('lists@mailchimpv3');
-		listsInterstCategories=application.wirebox.getInstance('listsInterestCategories@mailchimpv3');
+		listsInterestCategories=application.wirebox.getInstance('listsInterestCategories@mailchimpv3');
 	}
 	
 	/**
@@ -109,14 +109,14 @@ component extends="testbox.system.BaseSpec"
 
 			// Adds an interest Category
 			it("Adds an interest Category to the test list", function(){
-				var InterestCategories = listsInterstCategories.addInterestCategories(
+				InterestCategories = listsInterestCategories.addInterestCategories(
 				  	list_id = newList.id
 				  	,title= 'Test Category Title'
 				  	,display_order = 0
 				  	,type= 'checkboxes'
  				);
-				expect( newList ).toBeStruct();
-				expect( newList ).toHaveKey( 'id' );
+				expect( InterestCategories ).toBeStruct();
+				expect( InterestCategories ).toHaveKey( 'id' );
 			});
 			
 
