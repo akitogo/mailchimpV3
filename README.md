@@ -24,7 +24,7 @@ Currently supported but not fully tested are
 - Templates
 
 ## Installation 
-This API can be installed as as a ColdBox Module.  It requires a simple CommandBox command:
+This ColdBox Module can be installed using CommandBox:
 
 ```
 box install mailchimpV3
@@ -33,7 +33,7 @@ box install mailchimpV3
 
 
 ### ColdBox Module
-If you are using Coldbox 4.3 or later, we recommend to setup the api in in you central config like
+If you are using Coldbox 4.3 or later, we recommend to setup the Api in your central Coldbox.cfc config like
 
 ```
  	moduleSettings = {
