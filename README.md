@@ -31,14 +31,14 @@ component{
 	property name="mailchimpLists" inject="lists@mailchimpv3";
 	
 	function index(event,rc,prc){
-
-		
+	
 		// gets all lists
-    var results = lists.getLists();
-	  writeDump(results);
+    		var results = lists.getLists();
+	  	writeDump(results);
 		abort;
 	}
 }
+
 ```
 
 ## Written by
