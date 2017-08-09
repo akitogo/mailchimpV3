@@ -13,6 +13,7 @@ Currently supported but not fully tested are
 - Conversations
 - Ecommerce
 - Lists
+- ListsAbuseReports
 - ListsInterestCategories
 - Mailchimp
 - Reports
@@ -53,8 +54,12 @@ component{
 	function index(event,rc,prc){
 	
 		// gets all lists
-    		var results = lists.getLists();
-	  	writeDump(results);
+    		var results = mailchimpLists.getLists();
+	  		writeDump(results);
+	  	
+	  	// just return email addresses from abuse reports	
+		var abuseReports = lists.getAbuseReports('INSERT LIST ID HERE','abuse_reports.email_address');
+		writeDump(abuseReports);	  		
 		abort;
 	}
 }

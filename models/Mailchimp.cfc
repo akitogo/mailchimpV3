@@ -72,7 +72,6 @@ component displayname="MailChimp" accessors="true"  {
 
 		var httpresponse = httpService.send().getPrefix();
 		var httpContent = httpresponse.fileContent;
-		
 		// for successful delete oeprations we do not receive any content
 		if(requestMethod eq 'delete'){
 			if (httpresponse.status_code gte 200 and httpresponse.status_code lt 300)
@@ -144,7 +143,10 @@ component displayname="MailChimp" accessors="true"  {
 		}
 
 		for (key in arguments.params) {
-			response = listAppend(response, key & "=" & urlEncodedFormat(arguments.params[key]), "&");
+			var urlValue = urlEncodedFormat(arguments.params[key]);
+			urlValue = replace(urlValue,'%2E','.','all');
+			if(urlValue neq '')
+				response = listAppend(response, key & "=" & urlValue, "&");
 		}
 
 		if (len(response) > 0) {

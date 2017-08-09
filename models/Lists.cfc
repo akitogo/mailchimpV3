@@ -174,7 +174,80 @@ component  {
 
     return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}', arguments);
   }
+  
+  
+  
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Abuse Reports
+//																														
+// Manage abuse complaints for a specific list. An abuse complaint occurs when your recipient reports an email as spam 
+// in their mail program.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+  /**
+   * Get all abuse reports for a specific list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param string count
+   *   The number of records to return. 
+   * @param string offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   */
+  public function getAbuseReports(
+  	list_id
+  	,fields
+  	,exclude_fields
+  	,count=10
+  	,offset=0) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/abuse-reports', arguments);
+  }
+  /**
+   * Get details about a specific abuse report
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param string count
+   *   The number of records to return. 
+   * @param string offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   */
+  public function getAbuseReport(
+  	list_id
+  	,report_id
+  	,fields
+  	,exclude_fields
+  	,count=10
+  	,offset=0) {
+
+    return getClient().mailchimpRequest('GET', ' /lists/{list_id}/abuse-reports/{report_id}', arguments);
+  }
+  
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
   /**
    * Gets activity related to a member of a MailChimp list.
    *
