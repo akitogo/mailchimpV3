@@ -1,7 +1,7 @@
 # mailchimpV3
 Our goal is to offer a feature complete Mailchimp Api 3.0 Wrapper for Coldfusion Coldbox. It is still work in progress
 
-There are a few Coldfusion implementations but they are all far from being feature complete.
+There are a few Coldfusion implementations for Mailchimp but they are all far from being feature complete.
 
 The api is loosely based on https://github.com/kevindb/cf-mailchimp and https://github.com/thinkshout/mailchimp-api-php
 
