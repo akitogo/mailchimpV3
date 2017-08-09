@@ -20,8 +20,7 @@ If you are using Coldbox 4.3 or later, we recommend to setup the api in in you c
         	apikey='YOUR API Key goes here'
       	},
 
-Then you can leverage the API CFC via the injection DSL: `GoogleTranslation@GoogleCloudTranslation`
-
+```
 ## Usage
 ```
 /**
