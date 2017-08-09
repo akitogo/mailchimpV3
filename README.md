@@ -3,6 +3,8 @@ Our goal is to offer a feature complete Mailchimp Api 3.0 Wrapper for Coldfusion
 
 There are a few Coldfusion implementations but they are all far from being feature complete.
 
+The api is loosely based on https://github.com/kevindb/cf-mailchimp and https://github.com/thinkshout/mailchimp-api-php
+
 ### What's currently supported
 Currently supported but not fully tested are
 - Automations
