@@ -1,6 +1,21 @@
 # mailchimpV3
-Our goal is to offer a feature complete Mailchimp Api 3.0 Wrapper for Coldfusion Coldbox. Currently it is still work in progress
+Our goal is to offer a feature complete Mailchimp Api 3.0 Wrapper for Coldfusion Coldbox. It is still work in progress
 
+There are a few Coldfusion implementations but they are all far from being feature complete.
+
+### What's currently supported
+Currently supported but not fully tested are
+- Automations
+- CampaignFolders
+- Campaigns
+- Conversations
+- Ecommerce
+- Lists
+- ListsInterestCategories
+- Mailchimp
+- Reports
+- TemplateFolders
+- Templates
 
 ## Installation 
 This API can be installed as as a ColdBox Module.  It requires a simple CommandBox command:
@@ -16,9 +31,9 @@ If you are using Coldbox 4.3 or later, we recommend to setup the api in in you c
 
 ```
  	moduleSettings = {
-    	mailchimpV3 = {
-        	apikey='YOUR API Key goes here'
-      	},
+    		mailchimpV3 = {
+        		apikey='YOUR API Key goes here'
+    	  	}
 
 ```
 ## Usage
