@@ -38,6 +38,10 @@ If you are using Coldbox 4.3 or later, we recommend to setup the api in in you c
     	  	}
 
 ```
+
+## Tests
+Mailchimp doesn't offer a sandbox, so all test run in the account associated with the API key. It a test fails it might leave a test list with entries which can be safely deleted.
+
 ## Usage
 ```
 /**
