@@ -13,7 +13,10 @@ Currently supported but not fully tested are
 - Conversations
 - Ecommerce
 - Lists
-- ListsAbuseReports
+  - AbuseReports
+  - Activity
+  - Clients (email clients)
+  - Growth History
 - ListsInterestCategories
 - Mailchimp
 - Reports

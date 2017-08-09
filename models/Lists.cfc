@@ -138,44 +138,6 @@ component  {
     return getClient().mailchimpRequest('POST', '/lists/{list_id}/merge-fields', arguments);
   }
 
-  /**
-   * Gets information about all members of a MailChimp list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   *
-   * @return struct
-   *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#read-get_lists_list_id_members
-   */
-  public function getMembers(list_id) {
-
-    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members', arguments);
-  }
-
-  /**
-   * Gets information about a member of a MailChimp list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param string email
-   *   The member's email address.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   *
-   * @return struct
-   *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#read-get_lists_list_id_members_subscriber_hash
-   */
-  public function getMemberInfo(list_id, email) {
-      arguments.subscriber_hash = hash(lcase(email),'md5');
-
-    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}', arguments);
-  }
-  
-  
   
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -203,7 +165,7 @@ component  {
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/abuse-reports/
    */
   public function getAbuseReports(
   	list_id
@@ -230,7 +192,7 @@ component  {
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/abuse-reports/
    */
   public function getAbuseReport(
   	list_id
@@ -245,9 +207,151 @@ component  {
   
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Activity
+// Get recent daily, aggregated activity stats for your list. For example, view unsubscribes, signups, total emails 
+// sent, opens, clicks, and more, for up to 180 days.
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
+  /**
+   * 	Get recent list activity
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   */
+  public function getActivity(list_id, fields,exclude_fields) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/activity', arguments);
+  }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Clients
+// Get information about the most popular email clients for subscribers in a specific MailChimp list.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 	Get a list of the top email clients based on user-agent strings.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   */
+  public function getClients(list_id, fields,exclude_fields) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/clients', arguments);
+  }  
+  /**
+   * Gets information about all members of a MailChimp list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param array parameters
+   *   Associative array of optional request parameters.
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#read-get_lists_list_id_members
+   */
+  public function getMembers(list_id) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members', arguments);
+  }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Growth History
+// View a summary of the month-by-month growth activity for a specific list.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 	Get a month-by-month summary of a specific list’s growth activity.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param string count
+   *   The number of records to return. Default value is 10.
+   * @param string offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/growth-history/
+   */
+  public function getGrowthHistory(list_id, fields,exclude_fields,count=10,offset=0) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/growth-history', arguments);
+  } 
+
+  /**
+   * 	Get a summary of a specific list’s growth activity for a specific month and year.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string month
+   *   A specific month of list growth history. format: yyyy-mm e.g. 2017-07
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/growth-history/
+   */
+  public function getGrowthHistoryByMonth(list_id,month,fields,exclude_fields) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/growth-history/{month}', arguments);
+  }    
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Members
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Gets information about a member of a MailChimp list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param array parameters
+   *   Associative array of optional request parameters.
+   *
+   * @return struct
+   *
+   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#read-get_lists_list_id_members_subscriber_hash
+   */
+  public function getMemberInfo(list_id, email) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}', arguments);
+  }  
+      
   /**
    * Gets activity related to a member of a MailChimp list.
    *

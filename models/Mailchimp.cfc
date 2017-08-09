@@ -72,7 +72,8 @@ component displayname="MailChimp" accessors="true"  {
 
 		var httpresponse = httpService.send().getPrefix();
 		var httpContent = httpresponse.fileContent;
-		// for successful delete oeprations we do not receive any content
+
+		// for successful delete operations we do not receive any content
 		if(requestMethod eq 'delete'){
 			if (httpresponse.status_code gte 200 and httpresponse.status_code lt 300)
 				return {};
