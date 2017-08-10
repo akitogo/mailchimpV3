@@ -240,4 +240,34 @@ component  {
     return getClient().mailchimpRequest('DELETE', '/campaigns/{campaign_id}',arguments);
   }
 
+  /**
+   * Search all campaigns for the specified query terms.
+   *
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param string query
+   *   The search query used to filter results. 
+   * @param string snip_start
+   *   To have the match highlighted with something (like a strong HTML tag), both this and snip_end must be passed. This parameter has a 25-character limit.
+   * @param string snip_end
+   *   To have the match highlighted with something (like a strong HTML tag), both this and snip_start must be passed. This parameter has a 25-character limit.   * @param string offset
+   * @param numeric offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/search-campaigns/
+   */
+  public function search(
+  	string fields
+  	,string exclude_fields
+  	,string query
+  	,string snip_start
+  	,string snip_end
+  	,numeric offset=0) {
+    return getClient().mailchimpRequest('GET', '/search-campaigns',arguments);
+  }
+
 }

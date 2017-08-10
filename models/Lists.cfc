@@ -282,7 +282,7 @@ component  {
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /**
-   * 	Get a month-by-month summary of a specific list’s growth activity.
+   * 	Get a month-by-month summary of a specific list's growth activity.
    *
    * @param string list_id
    *   The ID of the list.
@@ -306,7 +306,7 @@ component  {
   } 
 
   /**
-   * 	Get a summary of a specific list’s growth activity for a specific month and year.
+   * 	Get a summary of a specific list's growth activity for a specific month and year.
    *
    * @param string list_id
    *   The ID of the list.
@@ -685,6 +685,34 @@ component  {
     return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/webhooks/{webhook_id}', arguments);
   }
 
+  /**
+   * Search all campaigns for the specified query terms.
+   *
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param string query
+   *   The search query used to filter results. 
+   * @param string list_id
+   *   The unique id for the list.
+   * @param numeric offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/search-campaigns/
+   */
+  public function searchMembers(
+  	string fields
+  	,string exclude_fields
+  	,string query
+  	,string list_id
+  	,numeric offset=0
+  	) {
+    return getClient().mailchimpRequest('GET', '/search-members',arguments);
+  }
+  
   /**
    * Gets all lists an email address is subscribed to.
    *
