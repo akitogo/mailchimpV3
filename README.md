@@ -12,6 +12,8 @@ Currently supported but not fully tested are
 - Campaigns
 - Conversations
 - Ecommerce
+- FileManagerFiles
+- FileManagerFolders
 - Lists
   - AbuseReports
   - Activity
@@ -20,6 +22,8 @@ Currently supported but not fully tested are
 - ListsInterestCategories
 - Mailchimp
 - Reports
+- Search Campaigns (see campaigns)
+- Search Members (see lists)
 - TemplateFolders
 - Templates
 
