@@ -2,7 +2,7 @@
 component displayname="MailChimp" accessors="true"  {
 	property name="apiHost";
 	property name="apiKey";
-	
+
 	variables.apiHost = "https://us1.api.mailchimp.com/3.0/";
 	variables.apiKey = "";
 	variables.debug = false;
@@ -11,7 +11,7 @@ component displayname="MailChimp" accessors="true"  {
 			 string apiKey = "",
 				 string apiHost = ""
 	) {
-			
+
 		if (len(arguments.apiKey) > 0) {
 			variables.apiKey = arguments.apiKey;
 
@@ -42,36 +42,45 @@ component displayname="MailChimp" accessors="true"  {
 	) {
 		// we need to duplicate since structs are by reference
 		var allParams=duplicate(arguments.params);
-		
-		
+
+
 		// checks if path has elements to be replaced
 		var urlAsArray = listToArray(arguments.endpoint,'/');
 		for(var singleSegment in urlAsArray){
 			if(left(singleSegment,1) eq '{'){
 				toBeReplacedWith=allparams[mid(singleSegment,2,len(singleSegment)-2)];
 				arguments.endpoint=replace(endpoint,singleSegment,toBeReplacedWith);
-				
+
 				structDelete(arguments,toBeReplacedWith);
 			}
 		}
 
-		if(requestMethod eq 'post' or requestMethod eq 'delete'	){
+		if(requestMethod eq 'post'
+			or requestMethod eq 'delete'
+			or requestMethod eq 'patch'
+		){
 			local.url = variables.apiHost & arguments.endpoint;
 		} else {
 			local.url = variables.apiHost & arguments.endpoint & structToQueryString(allparams);
 		}
-					
+
 
 
 		var httpService = new http(url=local.url, method=requestMethod);
 		httpService.addParam(type="header",name="Authorization", value="apikey #getApiKey()#");
-		
-		if(requestMethod eq 'post'){
+
+		if(requestMethod eq 'post' or requestMethod eq 'patch'){
 			httpService.addParam(type="body", value=serializeJson(allparams));
 		}
 
 		var httpresponse = httpService.send().getPrefix();
 		var httpContent = httpresponse.fileContent;
+
+		// for successful delete operations we do not receive any content
+		if(requestMethod eq 'post' and httpContent eq ""){
+			if (httpresponse.status_code gte 200 and httpresponse.status_code lt 300)
+				return {};
+		}
 
 		// for successful delete operations we do not receive any content
 		if(requestMethod eq 'delete'){

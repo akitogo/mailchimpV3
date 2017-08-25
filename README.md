@@ -72,6 +72,8 @@ component{
 }
 
 ```
+## Versions
+0.7 25. Aug 2017 Added methods in Automations, CampaignFolders, Conversations
 
 ## Written by
 www.akitogo.com
