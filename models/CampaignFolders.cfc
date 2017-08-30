@@ -20,7 +20,7 @@ component  {
    *
    * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/#create-post_campaign_folders
    */
-  public function addCampaignFolder(string name) {
+  public function addFolder(string name) {
     return getClient().mailchimpRequest('POST', '/campaign-folders',arguments);
   }
 
@@ -44,7 +44,7 @@ component  {
    *
    * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/#
    */
-  public function getAllCampaignFolders(fields='',exculde_fields='',count=10,offset=0) {
+  public function getFolders(fields='',exculde_fields='',count=10,offset=0) {
     return getClient().mailchimpRequest('GET', '/campaign-folders',arguments);
   }
 
@@ -62,7 +62,7 @@ component  {
    *
    * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/#read-get_campaign_folders_folder_id
    */
-  public function getCampaignFolder(string folder_id, fields='', exculde_fields='') {
+  public function getFolder(string folder_id, fields='', exculde_fields='') {
     return getClient().mailchimpRequest('GET', '/campaign-folders/{folder_id}',arguments);
   }
 
@@ -81,7 +81,7 @@ component  {
    *
    * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/#edit-patch_campaign_folders_folder_id
    */
-  public function updateCampaignFolderName(string folder_id, string name) {
+  public function updateFolder(string folder_id, string name) {
     return getClient().mailchimpRequest('PATCH', '/campaign-folders/{folder_id}',arguments);
   }
 
@@ -98,7 +98,7 @@ component  {
    *
    * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/#delete-delete_campaign_folders_folder_id
    */
-  public function deleteCampaignFolder(string folder_id) {
+  public function deleteFolder(string folder_id) {
     return getClient().mailchimpRequest('DELETE', '/campaign-folders/{folder_id}',arguments);
   }
 

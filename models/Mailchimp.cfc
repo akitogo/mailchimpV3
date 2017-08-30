@@ -56,6 +56,7 @@ component displayname="MailChimp" accessors="true"  {
 		}
 
 		if(requestMethod eq 'post'
+			or requestMethod eq 'put'
 			or requestMethod eq 'delete'
 			or requestMethod eq 'patch'
 		){
@@ -69,7 +70,17 @@ component displayname="MailChimp" accessors="true"  {
 		var httpService = new http(url=local.url, method=requestMethod);
 		httpService.addParam(type="header",name="Authorization", value="apikey #getApiKey()#");
 
-		if(requestMethod eq 'post' or requestMethod eq 'patch'){
+		if(requestMethod eq 'post'
+			or requestMethod eq 'patch'
+			or requestMethod eq 'put'){
+
+			// we do not submit empty values
+			// so clean up struct first
+			for (var key in allparams){
+				if(allparams[key] eq '')
+					structDelete(allparams,key);
+			}
+
 			httpService.addParam(type="body", value=serializeJson(allparams));
 		}
 

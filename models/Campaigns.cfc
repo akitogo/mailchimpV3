@@ -3,7 +3,6 @@
  *
  */
 component  {
-	
 
 	any function getClient() provider="mailchimp@mailchimpv3"{
 	}
@@ -17,18 +16,88 @@ component  {
   CAMPAIGN_TYPE_RSS = 'rss';
   CAMPAIGN_TYPE_VARIATE = 'variate';
 
+
+  //Campaigns methods: Create
+  //Campaigns methods: Read
+  //Campaigns methods: Edit
+  //Campaigns methods: Delete
+  //Campaigns methods: Action
+
+  //Campaigns -> Content methods: Create
+  //Campaigns -> Content methods: Edit
+
+  //Campaigns -> Feedback methods: Create
+  //Campaigns -> Feedback methods: Read
+  //Campaigns -> Feedback methods: Edit
+  //Campaigns -> Feedback methods: Delete
+
+  //Campaigns -> Send Checklist methods: Read
+
+
+
+
+
+
+
+
   /**
    * Gets information about all campaigns owned by the authenticated account.
    *
-   * @param array parameters
-   *   Associative array of optional request parameters.
+   * @param array fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param array exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param numeric count
+   *   The number of records to return. Default value is 10.
+   * @param numeric offset
+   *   The number of records from a collection to skip.
+   *   Iterating over large collections with this parameter can be slow. Default value is 0.
+   * @param string type
+   *   The campaign type. Possible values: regular, plaintext, absplit, rss, variate
+   * @param string status
+   *   The status of the campaign.
+   * @param string before_send_time
+   *   Restrict the response to campaigns sent before the set time.
+   *   We recommend ISO 8601 time format: 2015-10-21T15:41:36+00:00.
+   * @param string since_send_time
+   *   Restrict the response to campaigns sent after the set time.
+   *   We recommend ISO 8601 time format: 2015-10-21T15:41:36+00:00.
+   * @param string before_create_time
+   *   Restrict the response to campaigns created before the set time.
+   *   We recommend ISO 8601 time format: 2015-10-21T15:41:36+00:00.
+   * @param string since_create_time
+   *   Restrict the response to campaigns created after the set time.
+   *   We recommend ISO 8601 time format: 2015-10-21T15:41:36+00:00.
+   * @param string list_id
+   *   The unique id for the list.
+   * @param string folder_id
+   *   The unique folder id.
+   * @param string sort_field
+   *   Returns files sorted by the specified field. Possible values: create_time, send_time
+   * @param string sort_dir
+   *   Determines the order direction for sorted results. Possible values: ASC, DESC
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/#read-get_campaigns
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/#read-get_campaigns
    */
-  public function getCampaigns() {
-    return getClient().mailchimpRequest('GET', '/campaigns');
+  public function getCampaigns(
+    fields=''
+    ,exculde_fields=''
+    ,numeric count=10
+    ,numeric offset=0
+    ,type
+    ,status
+    ,before_send_time
+    ,since_send_time
+    ,before_create_time
+    ,since_create_time
+    ,list_id
+    ,folder_id
+    ,sort_field
+    ,sort_dir
+  ) {
+    return getClient().mailchimpRequest('GET', '/campaigns',arguments);
   }
 
   /**
@@ -44,9 +113,25 @@ component  {
    * @see http://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/#read-get_campaigns_campaign_id
    */
   public function getCampaign(campaign_id ) {
-
     return getClient().mailchimpRequest('GET', '/campaigns/{campaign_id}',arguments);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * Adds a new campaign to the authenticated account.
@@ -248,7 +333,7 @@ component  {
    * @param string exclude_fields
    *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
    * @param string query
-   *   The search query used to filter results. 
+   *   The search query used to filter results.
    * @param string snip_start
    *   To have the match highlighted with something (like a strong HTML tag), both this and snip_end must be passed. This parameter has a 25-character limit.
    * @param string snip_end
