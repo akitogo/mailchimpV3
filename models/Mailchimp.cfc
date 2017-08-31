@@ -75,10 +75,19 @@ component displayname="MailChimp" accessors="true"  {
 			or requestMethod eq 'put'){
 
 			// we do not submit empty values
+			// we want sometimes to submit empty values (example segments)
 			// so clean up struct first
 			for (var key in allparams){
-				if(allparams[key] eq '')
+				if(isSimpleValue(allparams[key]) and allparams[key] eq ''){
 					structDelete(allparams,key);
+					continue;
+				}
+
+				if(isArray(allparams[key]) and arrayLen(allparams[key]) eq 0){
+					if (key neq 'static_segment')
+						structDelete(allparams,key);
+					continue;
+				}
 			}
 
 			httpService.addParam(type="body", value=serializeJson(allparams));

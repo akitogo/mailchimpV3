@@ -75,8 +75,7 @@ component{
 
 ```
 ## Versions
-0.8 30th Aug 2017 Fix for put, updated multiple others
-
+0.8 30th Aug 2017 fixes for put, updated Campaigns,FileManager, etc
 0.7 25th Aug 2017 Added methods in Automations, CampaignFolders, Conversations
 
 ## Written by

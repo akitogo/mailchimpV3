@@ -997,128 +997,22 @@ component  {
     ,required email
     ,email_address
     ,status_if_new
-    ,email_type
+    ,email_type=''
     ,status
-    ,merge_fields
-    ,interests
-    ,language
+    ,merge_fields=''
+    ,interests=''
+    ,language=''
     ,vip = false
-    ,location
-    ,ip_signup
-    ,timestamp_signup
-    ,ip_opt
-    ,timestamp_opt
+    ,location=''
+    ,ip_signup=''
+    ,timestamp_signup=''
+    ,ip_opt=''
+    ,timestamp_opt=''
     ,batch = FALSE) {
       arguments.subscriber_hash = hash(lcase(email),'md5');
 
     return getClient().mailchimpRequest('PUT', '/lists/{list_id}/members/{subscriber_hash}', arguments, batch);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /**
-   * Gets merge fields associated with a MailChimp list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   *
-   * @return struct
-   *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#read-get_lists_list_id_merge_fields
-   */
-  public function getMergeFields(list_id) {
-
-    return getClient().mailchimpRequest('GET', '/lists/{list_id}/merge-fields', arguments);
-  }
-
-  /**
-   * Add merge field associated with a MailChimp list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param string name
-   *   The name of the merge field.
-   * @param string type
-   *   The type for the merge field.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   *
-   * @return struct
-   *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#create-post_lists_list_id_merge_fields
-   */
-  public function addMergeField(list_id, name, type) {
-
-    return getClient().mailchimpRequest('POST', '/lists/{list_id}/merge-fields', arguments);
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /**
-   * Gets activity related to a member of a MailChimp list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param string email
-   *   The member's email address.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   *
-   * @return struct
-   *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
-   */
-  public function getMemberActivity(list_id, email) {
-      arguments.subscriber_hash = hash(lcase(email),'md5');
-
-    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}/activity', arguments);
-  }
-
-
 
 
   /**
@@ -1131,43 +1025,404 @@ component  {
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#delete-delete_lists_list_id_members_subscriber_hash
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#delete-delete_lists_list_id_members_subscriber_hash
    */
-  public function removeMember(list_id, email) {
+  public function deleteMember(list_id, email) {
       arguments.subscriber_hash = hash(lcase(email),'md5');
 
-    return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/members/{subscriber_hash}');
+    return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/members/{subscriber_hash}',arguments);
+  }
+
+
+  /**
+   * Gets activity related to a member of a MailChimp list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/activity/#read-get_lists_list_id_members_subscriber_hash_activity
+   */
+  public function getMemberActivity(list_id, email) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}/activity', arguments);
+  }
+
+   /**
+   * Gets the last 50 Goal events for a member on a specific list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/goals/#read-get_lists_list_id_members_subscriber_hash_goals
+   */
+  public function getMemberGoals(list_id, email) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}/goals', arguments);
+  }
+
+
+   /**
+   *  Add a new note for a specific subscriber.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string note
+   *   The content of the note. Note length is limited to 1,000 characters.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/notes/#create-post_lists_list_id_members_subscriber_hash_notes
+   */
+  public function addMemberNote(list_id, email, note) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('POST', '/lists/{list_id}/members/{subscriber_hash}/notes', arguments);
+  }
+
+   /**
+   *  Get recent notes for a specific list member.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param numeric count
+   *   The number of records to return. Default value is 10.
+   * @param numeric offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/notes/#read-get_lists_list_id_members_subscriber_hash_notes
+   */
+  public function getMemberNotes(list_id, email) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}/notes', arguments);
+  }
+
+   /**
+   *  Get a specific note for a specific list member.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string note_id
+   *   The id for the note.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/notes/#read-get_lists_list_id_members_subscriber_hash_notes
+   */
+  public function getMemberNote(list_id, email, note_id) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/members/{subscriber_hash}/notes/{note_id}', arguments);
+  }
+
+   /**
+   *  Update a specific note for a specific list member.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string note_id
+   *   The id for the note.
+   * @param string note
+   *   The content of the note. Note length is limited to 1,000 characters.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/notes/#read-get_lists_list_id_members_subscriber_hash_notes
+   */
+  public function editMemberNote(list_id, email, note_id, note) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('PATCH', '/lists/{list_id}/members/{subscriber_hash}/notes/{note_id}', arguments);
+  }
+
+   /**
+   *  Delete a specific note for a specific list member.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string email
+   *   The member's email address.
+   * @param string note_id
+   *   The id for the note.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/notes/#delete-delete_lists_list_id_members_subscriber_hash_notes_note_id
+   */
+  public function deleteMemberNote(list_id, email, note_id) {
+      arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/members/{subscriber_hash}/notes/{note_id}', arguments);
   }
 
 
 
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Merge Fields
+// Get the locations (countries) that the list’s subscribers have been tagged to based on geocoding their IP address.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
+  /**
+   * Add merge field associated with a MailChimp list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string tag
+   *   The tag used in MailChimp campaigns and for the /members endpoint.
+   * @param string name
+   *   required The name of the merge field.
+   * @param string type
+   *   required The type for the merge field. Possible Values: text,number,address,phone,date,url,imageurl,radio,dropdown,birthday,zip
+   * @param boolean required
+   *   The boolean value if the merge field is required.
+   * @param string default_value
+   *   The default value for the merge field if null.
+   * @param boolean public
+   *   Whether the merge field is displayed on the signup form.
+   * @param numeric display_order
+   *   The order that the merge field displays on the list signup form.
+   * @param struct options
+   *   Extra options for some merge field types. (Values: default_country, phone_format, date_format, choices, size)
+   * @param string help_text
+   *   Extra text to help the subscriber fill out the form.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#create-post_lists_list_id_merge_fields
+   */
+  public function addMergeField(list_id, name, type) {
+
+    return getClient().mailchimpRequest('POST', '/lists/{list_id}/merge-fields', arguments);
+  }
+
+  /**
+   * Gets merge fields associated with a MailChimp list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param numeric count
+   *   The number of records to return.
+   * @param numeric offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   * @param string type
+   *   The merge field type.
+   * @param boolean required
+   *   The boolean value if the merge field is required.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#read-get_lists_list_id_merge_fields
+   */
+  public function getMergeFields(list_id) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/merge-fields', arguments);
+  }
+
+  /**
+   * Get information about a specific merge field in a list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string merge_id
+   *   The id for the merge field.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#read-get_lists_list_id_merge_fields_merge_id
+   */
+  public function getMergeField(required list_id, required merge_id) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/merge-fields/{merge_id}', arguments);
+  }
+
+  /**
+   * Update a specific merge field in a list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string merge_id
+   *   The id for the merge field.
+   * @param string tag
+   *   The tag used in MailChimp campaigns and for the /members endpoint.
+   * @param string name
+   *   required The name of the merge field.
+   * @param boolean required
+   *   The boolean value if the merge field is required.
+   * @param string default_value
+   *   The default value for the merge field if null.
+   * @param boolean public
+   *   Whether the merge field is displayed on the signup form.
+   * @param numeric display_order
+   *   The order that the merge field displays on the list signup form.
+   * @param struct options
+   *   Extra options for some merge field types. (Values: default_country, phone_format, date_format, choices, size)
+   * @param string help_text
+   *   Extra text to help the subscriber fill out the form.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#read-get_lists_list_id_merge_fields_merge_id
+   */
+  public function editMergeField(required list_id, required merge_id, required name) {
+
+    return getClient().mailchimpRequest('PATCH', '/lists/{list_id}/merge-fields/{merge_id}', arguments);
+  }
+
+   /**
+   * Delete a specific merge field in a list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string merge_id
+   *   The id for the merge field.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/merge-fields/#delete-delete_lists_list_id_merge_fields_merge_id
+   */
+  public function deleteMergeField(required list_id, required merge_id) {
+
+    return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/merge-fields/{merge_id}', arguments);
+  }
 
 
 
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Segments
+// Manage segments for a specific MailChimp list. A segment is a section of your list that includes
+// only those subscribers who share specific common field information. Learn more about segments in MailChimp.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
+  /**
+   *  Create a new segment in a specific list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string name
+   *   The name of the segment.
+   * @param string static_segment
+   *   An array of emails to be used for a static segment. Any emails provided that are not present on the list
+   *   will be ignored. Passing an empty array will create a static segment without any subscribers.
+   *   This field cannot be provided with the options field.
+   * @param struct options
+   *   The conditions of the segment. Static and fuzzy segments don’t have conditions.
+   *   Must provide either an "options" field or a "static_segment" field
+   * @param bool batch
+   *   TRUE to create a new pending batch operation.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#create-post_lists_list_id_segments
+   */
+  //Must provide either an "options" field or a "static_segment" field
+  public function addSegment(
+    required list_id
+    ,required name
+    ,array static_segment
+    ,batch = FALSE) {
+    return getClient().mailchimpRequest('POST', '/lists/{list_id}/segments', arguments, batch);
+  }
 
+  /**
+   * Batch add/remove list members to static segment
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string segment_id
+   *   The ID of the segment.
+   * @param array members_to_add
+   *   An array of emails to be used for a static segment. Any emails provided that are not present on the list will be ignored.
+   * @param array members_to_remove
+   *   An array of emails to be used for a static segment. Any emails provided that are not present on the list will be ignored.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#create-post_lists_list_id_segments_segment_id
+   */
+  public function addOrRemoveSegmentMembers(list_id, segment_id, members_to_add, members_to_remove) {
 
-
-
-
-
+    return getClient().mailchimpRequest('POST', '/lists/{list_id}/segments/{segment_id}', arguments);
+  }
 
   /**
    * Gets information about segments associated with a MailChimp list.
    *
    * @param string list_id
    *   The ID of the list.
-   * @param array parameters
-   *   Associative array of optional request parameters.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param numeric count
+   *   The number of records to return. Default value is 10.
+   * @param numeric offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   * @param string type
+   *   Limit results based on segment type.
+   * @param string since_created_at
+   *   Restrict results to segments created after the set time.
+   * @param string before_created_at
+   *   Restrict results to segments created before the set time.
+   * @param string since_updated_at
+   *   Restrict results to segments update after the set time.
+   * @param string before_updated_at
+   *   Restrict results to segments update before the set time.
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments
    */
   public function getSegments(list_id) {
 
@@ -1181,37 +1436,18 @@ component  {
    *   The ID of the list.
    * @param string segment_id
    *   The ID of the list segment.
-   * @param array parameters
-   *   Associative array of optional request parameters.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments_segment_id
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments_segment_id
    */
   public function getSegment(list_id, segment_id) {
 
     return getClient().mailchimpRequest('GET', '/lists/{list_id}/segments/{segment_id}', arguments);
-  }
-
-  /**
-   * Adds a new segment to a MailChimp list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param string name
-   *   The name of the segment.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   * @param bool batch
-   *   TRUE to create a new pending batch operation.
-   *
-   * @return struct
-   *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#create-post_lists_list_id_segments
-   */
-  public function addSegment(list_id, name, batch = FALSE) {
-
-    return getClient().mailchimpRequest('POST', '/lists/{list_id}/segments', arguments, batch);
   }
 
   /**
@@ -1223,8 +1459,12 @@ component  {
    *   The ID of the segment.
    * @param string name
    *   The name of the segment.
-   * @param array parameters
-   *   Associative array of optional request parameters.
+   * @param array static_segment
+   *   An array of emails to be used for a static segment. Any emails provided that are not present on the list
+   *   will be ignored. Passing an empty array for an existing static segment will reset that segment and remove all members.
+   *   This field cannot be provided with the options field.
+   * @param struct options
+   *   The conditions of the segment. Static and fuzzy segments don’t have conditions.
    * @param bool batch
    *   TRUE to create a new pending batch operation.
    *
@@ -1232,29 +1472,36 @@ component  {
    *
    * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#edit-patch_lists_list_id_segments_segment_id
    */
-  public function updateSegment(list_id, segment_id, name, batch = FALSE) {
+  public function updateSegment(list_id, segment_id, required name, array static_segment) {
 
-    return getClient().mailchimpRequest('PATCH', '/lists/{list_id}/segments/{segment_id}', arguments, batch);
+    return getClient().mailchimpRequest('PATCH', '/lists/{list_id}/segments/{segment_id}', arguments);
   }
 
   /**
-   * Gets information about members of a list segment.
+   * Delete a specific segment in a list.
    *
    * @param string list_id
    *   The ID of the list.
-   * @param string segment_id
+   * @param int segment_id
    *   The ID of the segment.
-   * @param array parameters
-   *   Associative array of optional request parameters.
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/members/#read-get_lists_list_id_segments_segment_id_members
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#delete-delete_lists_list_id_segments_segment_id
    */
-  public function getSegmentMembers(list_id, segment_id) {
+  public function deleteSegment(list_id, segment_id) {
 
-    return getClient().mailchimpRequest('GET', '/lists/{list_id}/segments/{segment_id}/members', arguments);
+    return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/segments/{segment_id}', arguments);
   }
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Segment Members
+// Manage list members in a saved segment.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   /**
    * Adds a member to a list segment.
@@ -1265,16 +1512,177 @@ component  {
    *   The ID of the segment.
    * @param array email
    *   The email address to add to the segment.
-   * @param array parameters
-   *   Associative array of optional request parameters.
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/members/
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/members/#create-post_lists_list_id_segments_segment_id_members
    */
-  public function addSegmentMember(list_id, segment_id, email) {
+  public function addSegmentMember(list_id, segment_id, email_address) {
 
     return getClient().mailchimpRequest('POST', '/lists/{list_id}/segments/{segment_id}/members', arguments);
+  }
+
+
+  /**
+   * Gets information about members of a list segment.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string segment_id
+   *   The ID of the segment.
+   * @param string fields
+   *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
+   * @param string exclude_fields
+   *   A comma-separated list of fields to exclude. Reference parameters of sub-objects with dot notation.
+   * @param numeric count
+   *   The number of records to return. Default value is 10.
+   * @param numeric offset
+   *   The number of records from a collection to skip. Iterating over large collections with this parameter can be slow. Default value is 0.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/members/#read-get_lists_list_id_segments_segment_id_members
+   */
+  public function getSegmentMembers(list_id, segment_id) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/segments/{segment_id}/members', arguments);
+  }
+
+
+  /**
+   * Remove a member from the specified static segment.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string segment_id
+   *   The ID of the segment.
+   * @param string email
+   *   Email adress of a subscriber
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/members/#delete-delete_lists_list_id_segments_segment_id_members_subscriber_hash
+   */
+  public function removeSegmentMember(list_id, segment_id, email) {
+		arguments.subscriber_hash = hash(lcase(email),'md5');
+
+    return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/segments/{segment_id}/members/{subscriber_hash}', arguments);
+  }
+
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Signup Forms
+// Manage list signup forms.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Gets information about webhooks associated with a list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/signup-forms/#read-get_lists_list_id_signup_forms
+   */
+  public function getSignupForms(list_id) {
+
+    return getClient().mailchimpRequest('GET', '/lists/{list_id}/signup-forms', arguments);
+  }
+
+  /**
+   * Customize a list’s default signup form.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param struct header
+   *   Options for customizing your signup form header.
+   * @param array contents
+   *   The signup form body content.
+   * @param array styles
+   *   An array of objects, each representing an element style for the signup form.
+   *
+   * @return struct
+   *
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/signup-forms/#create-post_lists_list_id_signup_forms
+   */
+ 	//TODO fix this
+  public function editSignupForm(
+     list_id
+     ,array header=
+     [
+	     {
+	     'image_url':'',
+	     'text':'',
+	     'image_width':'',
+	     'image_height':'',
+	     'image_alt':'',
+	     'image_link':'',
+	     'image_align':'',
+	     'image_border_width':'',
+	     'image_border_style':'',
+	     'image_border_color':'',
+	     'image_target':''
+	     }
+     ]
+     ,contents=''
+     ,styles=''
+     ) {
+
+    return getClient().mailchimpRequest('POST', '/lists/{list_id}/signup-forms', arguments);
+  }
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Webhooks
+// Manage webhooks for a specific MailChimp list.
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  /**
+   * Creates a new webhook for a specific list.
+   *
+   * @param string list_id
+   *   The ID of the list.
+   * @param string url
+   *   The callback URL the webhook should notify of events.
+   * @param struct events
+   *   The events that can trigger the webhook and whether they are enabled. ( boolean subscribe, unsubscribe, profile, cleaned, upemail, campaign )
+   * @param struct sources
+   *   The possible sources of any events that can trigger the webhook and whether they are enabled. ( boolean user, admin, api )
+   *
+   * @return struct
+   */
+  public function addWebhook(
+    list_id
+    ,url=''
+    ,events =
+    {
+		"subscribe" : true,
+		"unsubscribe" : true,
+		"profile" : true,
+		"cleaned" : true,
+		"upemail" : true,
+		"campaign" : true
+	}
+
+
+    ,struct sources =
+    {
+         "user" : true,
+         "admin" : true,
+         "api" : true
+    }
+
+
+    ) {
+
+    return getClient().mailchimpRequest('POST', '/lists/{list_id}/webhooks', arguments);
   }
 
   /**
@@ -1282,12 +1690,10 @@ component  {
    *
    * @param string list_id
    *   The ID of the list.
-   * @param array parameters
-   *   Associative array of optional request parameters.
    *
    * @return struct
    *
-   * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/webhooks/#read-get_lists_list_id_webhooks
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/webhooks/#read-get_lists_list_id_webhooks_webhook_id
    */
   public function getWebhooks(list_id) {
 
@@ -1314,33 +1720,12 @@ component  {
   }
 
   /**
-   * Adds a new webhook to a list.
-   *
-   * @param string list_id
-   *   The ID of the list.
-   * @param string url
-   *   The callback URL the webhook should notify of events.
-   * @param array parameters
-   *   Associative array of optional request parameters.
-   * @param bool batch
-   *   TRUE to create a new pending batch operation.
-   *
-   * @return struct
-   */
-  public function addWebhook(list_id, url, batch = FALSE) {
-
-    return getClient().mailchimpRequest('POST', '/lists/{list_id}/webhooks', arguments, batch);
-  }
-
-  /**
    * Deletes a webhook.
    *
    * @param string list_id
    *   The ID of the list.
    * @param string webhook_id
    *   The ID of the webhook.
-   * @param array parameters
-   *   Associative array of optional request parameters.
    *
    * @return struct
    */
@@ -1348,6 +1733,12 @@ component  {
 
     return getClient().mailchimpRequest('DELETE', '/lists/{list_id}/webhooks/{webhook_id}', arguments);
   }
+
+
+
+
+//search members, not in this cfc
+
 
   /**
    * Search all campaigns for the specified query terms.
