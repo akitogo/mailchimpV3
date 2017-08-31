@@ -19,6 +19,7 @@ Currently supported but not fully tested are
   - Activity
   - Clients (email clients)
   - Growth History
+  - Interest Categories
 - ListsInterestCategories
 - Mailchimp
 - Reports
