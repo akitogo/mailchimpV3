@@ -1359,6 +1359,13 @@ component  {
    * @param struct options
    *   The conditions of the segment. Static and fuzzy segments don’t have conditions.
    *   Must provide either an "options" field or a "static_segment" field
+   *   Options have 2 elements, match (string match type) and conditions (An array of segment conditions.)
+   *   Possible values for match: any, all.
+   *   Conditions have 3 elements: condition_type ( string The type of segment, for example: date, language, Mandrill, static, and more.)
+   *   Segment Type (string segment type) and Aim (object)
+   *   Aim has 3 elements op (string The member’s status, based on their campaign interaction. Possible values: open, click, sent, noopen, noclick, nosent)
+   *   field (string The segment field, 'aim', possible values aim)
+   *   and value (Either the web id value for a specific campaign or ‘any’ to account for subscribers who have or have not interacted with any campaigns.)
    * @param bool batch
    *   TRUE to create a new pending batch operation.
    *
@@ -1465,6 +1472,13 @@ component  {
    *   This field cannot be provided with the options field.
    * @param struct options
    *   The conditions of the segment. Static and fuzzy segments don’t have conditions.
+   *   Options have 2 elements, match (string match type) and conditions (An array of segment conditions.)
+   *   Possible values for match: any, all.
+   *   Conditions have 3 elements: condition_type ( string The type of segment, for example: date, language, Mandrill, static, and more.)
+   *   Segment Type (string segment type) and Aim (object)
+   *   Aim has 3 elements op (string The member’s status, based on their campaign interaction. Possible values: open, click, sent, noopen, noclick, nosent)
+   *   field (string The segment field, 'aim', possible values aim)
+   *   and value (Either the web id value for a specific campaign or ‘any’ to account for subscribers who have or have not interacted with any campaigns.)
    * @param bool batch
    *   TRUE to create a new pending batch operation.
    *
