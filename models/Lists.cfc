@@ -19,54 +19,6 @@ component  {
 
 
 
-
-//Lists -> Locations Methods: Read
-//Lists -> Members Methods: Create
-//Lists -> Members Methods: Edit
-//Lists -> Members Methods: Delete
-
-//Lists -> Members -> Member Activity Methods: Read
-
-//Lists -> Members -> Member Goals Methods: Read
-
-//Lists -> Members -> Member Notes Methods: Create
-//Lists -> Members -> Member Notes Methods: Read
-//Lists -> Members -> Member Notes Methods: Edit
-//Lists -> Members -> Member Notes Methods: Delete
-
-//Lists -> Merge Fields Methods: Create
-//Lists -> Merge Fields Methods: Read
-//Lists -> Merge Fields Methods: Edit
-//Lists -> Merge Fields Methods: Delete
-
-//Lists -> Segments Methods: Create
-//Lists -> Segments Methods: Read
-//Lists -> Segments Methods: Edit
-//Lists -> Segments Methods: Delete
-
-//Lists -> Segments -> Segment Members Methods: Create
-//Lists -> Segments -> Segment Members Methods: Read
-//Lists -> Segments -> Segment Members Methods: Delete
-
-//Lists -> Signup Forms Methods: Create
-//Lists -> Signup Forms Methods: Read
-
-//Lists -> Webhooks Methods: Create
-//Lists -> Webhooks Methods: Read
-//Lists -> Webhooks Methods: Edit
-//Lists -> Webhooks Methods: Delete
-
-
-
-
-
-
-
-
-
-
-
-
 //Lists Methods: Create
 
   /**
