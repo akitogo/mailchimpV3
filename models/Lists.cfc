@@ -17,8 +17,6 @@ component  {
 
 
 
-
-
 //Lists Methods: Create
 
   /**
@@ -1701,13 +1699,8 @@ component  {
   }
 
 
-
-
-//search members, not in this cfc
-
-
   /**
-   * Search all campaigns for the specified query terms.
+   * Search for list members. This search can be restricted to a specific list, or can be used to search across all lists in an account.
    *
    * @param string fields
    *   A comma-separated list of fields to return. Reference parameters of sub-objects with dot notation.
@@ -1722,7 +1715,7 @@ component  {
    *
    * @return struct
    *
-   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/search-campaigns/
+   * @see https://developer.mailchimp.com/documentation/mailchimp/reference/search-members/#read-get_search_members
    */
   public function searchMembers(
   	string fields
@@ -1733,6 +1726,8 @@ component  {
   	) {
     return getClient().mailchimpRequest('GET', '/search-members',arguments);
   }
+
+
 
   /**
    * Gets all lists an email address is subscribed to.

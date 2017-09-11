@@ -9,10 +9,6 @@ component  {
 	}
 
 
-
-
-
-
 // Templates methods: Read
 
   /**

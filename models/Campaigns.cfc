@@ -18,14 +18,6 @@ component  {
 
 
 
-
-
-
-
-
-
-
-
   //Campaigns methods: Create
 
   /**
