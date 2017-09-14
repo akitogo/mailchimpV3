@@ -5,8 +5,7 @@ There are a few Coldfusion implementations for Mailchimp but they are all far fr
 
 The api is loosely based on https://github.com/kevindb/cf-mailchimp and https://github.com/thinkshout/mailchimp-api-php
 
-### What's currently supported
-Currently supported but not fully tested are
+### All API endpoints are supported
 - Automations
 - CampaignFolders
 - Campaigns
