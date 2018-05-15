@@ -3,6 +3,8 @@ component displayname="MailChimp" accessors="true"  {
 	property name="apiHost";
 	property name="apiKey";
 
+	// datacenter us1 will be replaced in init
+	// see below
 	variables.apiHost = "https://us1.api.mailchimp.com/3.0/";
 	variables.apiKey = "";
 	variables.debug = false;
